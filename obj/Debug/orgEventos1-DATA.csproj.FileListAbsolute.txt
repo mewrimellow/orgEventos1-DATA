@@ -1,0 +1,6 @@
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\bin\Debug\orgEventos1-DATA.dll
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\bin\Debug\orgEventos1-DATA.pdb
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\obj\Debug\orgEventos1-DATA.csproj.AssemblyReference.cache
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\obj\Debug\orgEventos1-DATA.csproj.CoreCompileInputs.cache
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\obj\Debug\orgEventos1-DATA.dll
+C:\Users\maria.vbcsalgado\source\repos\orgEventos1-DATA\obj\Debug\orgEventos1-DATA.pdb
