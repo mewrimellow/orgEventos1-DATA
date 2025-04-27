@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Cliente-DAO.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="Evento.cs" />
+    <Compile Include="Lugar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

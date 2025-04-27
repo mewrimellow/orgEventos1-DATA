@@ -17,9 +17,9 @@ namespace orgEventos1_DATA
 
         public string email { get; set; }
 
-        public string logradouro { get; set; }
-
         public DateTime dataNasc { get; set; }
+
+        public string logradouro { get; set; }        
 
         public string numLogradouro { get; set; }
 
