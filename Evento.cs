@@ -8,10 +8,10 @@ namespace orgEventos1_DATA
 {
     internal class Evento
     {
+        public int IdEvento { get; set; }
         public string Tipo { get; set; }
         public float Preco { get; set; }
-        public string Lotacao { get; set; }
-        public int IdEvento { get; set; }
+        public string Lotacao { get; set; }        
         public DateTime HoraComeco { get; set; }
         public DateTime HoraFin { get; set; }
         public DateTime DiaEvento { get; set; }
