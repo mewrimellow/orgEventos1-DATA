@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace orgEventos1_DATA
 {
-    internal class Evento
+    public class Evento
     {
         public int IdEvento { get; set; }
         public string Tipo { get; set; }

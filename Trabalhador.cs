@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace orgEventos1_DATA
 {
-    internal class Trabalhador
+    public class Trabalhador
     {
         public int IdTrabalhador { get; set; }
         public string Cpf { get; set; }

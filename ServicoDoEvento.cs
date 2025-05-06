@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace orgEventos1_DATA
 {
-    internal class ServicoDoEvento
+    public class ServicoDoEvento
     {
         public int FkServicoIdServico { get; set; }  // Relación con Servico
         public int FkEventoIdEvento { get; set; }  // Relación con Evento

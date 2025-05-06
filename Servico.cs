@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace orgEventos1_DATA
 {
-    internal class Servico
+    public class Servico
     {
         public int IdServico { get; set; }
         public decimal Preco { get; set; }        
