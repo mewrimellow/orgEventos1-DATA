@@ -22,8 +22,8 @@ namespace orgEventos1_DATA
         public void InserirServico(Servico servico)
         {
 
-            const string query = @"INSERT INTO servico (Preco, Descricao, Tipo, )
-                                 VALUES (@Preco, @Descricao, @Tipo )";
+            const string query = @"INSERT INTO servico (preco, descricao, tipo, )
+                                 VALUES (@preco, @descricao, @tipo )";
 
 
             try
@@ -32,9 +32,9 @@ namespace orgEventos1_DATA
                 using (var comando = new SqlCommand(query, conexaoBd))
 
                 {
-                    comando.Parameters.Add("@Tipo", SqlDbType.Decimal).Value = servico.Preco;
-                    comando.Parameters.Add("@Nome", SqlDbType.NChar).Value = servico.Descricao ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Cep", SqlDbType.NChar).Value = servico.Tipo ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@preco", SqlDbType.Decimal).Value = servico.preco;
+                    comando.Parameters.Add("@descricao", SqlDbType.NChar).Value = servico.descricao ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@tipo", SqlDbType.NChar).Value = servico.tipo ?? (object)DBNull.Value;
 
 
 

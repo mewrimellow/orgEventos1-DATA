@@ -21,8 +21,8 @@ namespace orgEventos1_DATA
         public void IncluirTrabalhador(Trabalhador trabalhador)
         {
 
-            const string query = @"INSERT INTO trabalhador(Cpf, Email, Nome, Telefone)
-                                 VALUES (@Cpf, @Email, @Nome, @Telefone )";
+            const string query = @"INSERT INTO trabalhador(cpf, email, nome, telefone)
+                                 VALUES (@cpf, @email, @nome, @telefone )";
 
 
             try
@@ -31,10 +31,10 @@ namespace orgEventos1_DATA
                 using (var comando = new SqlCommand(query, conexaoBd))
 
                 {
-                    comando.Parameters.Add("@Cpf", SqlDbType.NVarChar).Value = trabalhador.Cpf ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Email", SqlDbType.NChar).Value = trabalhador.Email ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Nome", SqlDbType.NChar).Value = trabalhador.Nome ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Telefone", SqlDbType.NVarChar).Value = trabalhador.Telefone ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@cpf", SqlDbType.NVarChar).Value = trabalhador.cpf ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@email", SqlDbType.NChar).Value = trabalhador.email ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@nome", SqlDbType.NChar).Value = trabalhador.nome ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@telefone", SqlDbType.NVarChar).Value = trabalhador.telefone ?? (object)DBNull.Value;
 
 
 

@@ -21,8 +21,8 @@ namespace orgEventos1_DATA
         public void IncluirEvento(Evento evento)
         {
 
-            const string query = @"INSERT INTO evento(Tipo, Preco, Lotacao, HoraComeco, HoraFin, DiaEvento, )
-                                            VALUES (@Tipo, @Preco, @Lotacao, @HoraComeco, @HoraFin, @DiaEvento, )";
+            const string query = @"INSERT INTO evento(tipo, preco, lotacao, hora_comeco, hora_fin, dia_evento )
+                                            VALUES (@tipo, @preco, @lotacao, @hora_comeco, @hora_fin, @dia_evento )";
 
 
             try
@@ -31,12 +31,12 @@ namespace orgEventos1_DATA
                 using (var comando = new SqlCommand(query, conexaoBd))
 
                 {
-                    comando.Parameters.Add("@Tipo", SqlDbType.NVarChar).Value = evento.Tipo ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Preco", SqlDbType.Decimal).Value = evento.Preco;
-                    comando.Parameters.Add("@Lotacao", SqlDbType.NChar).Value = evento.Lotacao ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@HoraComeco", SqlDbType.DateTime).Value = evento.HoraComeco;
-                    comando.Parameters.Add("@HoraFin", SqlDbType.DateTime).Value = evento.HoraFin;
-                    comando.Parameters.Add("@DiaEvento", SqlDbType.DateTime).Value = evento.DiaEvento;
+                    comando.Parameters.Add("@tipo", SqlDbType.NVarChar).Value = evento.tipo ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@preco", SqlDbType.Decimal).Value = evento.preco;
+                    comando.Parameters.Add("@lotacao", SqlDbType.NChar).Value = evento.lotacao ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@hora_comeco", SqlDbType.DateTime).Value = evento.hora_comeco;
+                    comando.Parameters.Add("@hora_fin", SqlDbType.DateTime).Value = evento.hora_fin;
+                    comando.Parameters.Add("@dia_evento", SqlDbType.DateTime).Value = evento.dia_evento;
 
 
                     conexaoBd.Open();

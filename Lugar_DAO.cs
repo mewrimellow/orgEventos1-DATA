@@ -22,8 +22,8 @@ namespace orgEventos1_DATA
         public void IncluirLugar ( Lugar lugar)
         {
 
-            const string query = @"INSERT INTO lugar(Tipo, Nome, Cep, Capacidade, Logradouro, NumLogradouro, Preco, )
-                                 VALUES (@Tipo, @Nome, @Cep, @Capacidade, @Logradouro, @NumLogradouro, @Preco, )";
+            const string query = @"INSERT INTO lugar(tipo, nome, cep, capacidade, logradouro, numLogradouro, preco )
+                                 VALUES (@tipo, @nome, @cep, @capacidade, @logradouro, @numLogradouro, @preco )";
 
 
             try
@@ -32,13 +32,13 @@ namespace orgEventos1_DATA
                 using (var comando = new SqlCommand(query, conexaoBd))
 
                 {
-                    comando.Parameters.Add("@Tipo", SqlDbType.NVarChar).Value = lugar.Tipo ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Nome", SqlDbType.NChar).Value = lugar.Nome ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Cep", SqlDbType.NChar).Value = lugar.Cep ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Capacidade", SqlDbType.NVarChar).Value = lugar.Capacidade ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Logradouro", SqlDbType.DateTime).Value = lugar.Logradouro;
-                    comando.Parameters.Add("@NumLogradouro", SqlDbType.NVarChar).Value = lugar.NumLogradouro ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@Preco", SqlDbType.Decimal).Value = lugar.Preco;
+                    comando.Parameters.Add("@tipo", SqlDbType.NVarChar).Value = lugar.tipo ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@nome", SqlDbType.NChar).Value = lugar.nome ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@cep", SqlDbType.NChar).Value = lugar.cep ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@capacidade", SqlDbType.NVarChar).Value = lugar.capacidade ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@logradouro", SqlDbType.DateTime).Value = lugar.logradouro;
+                    comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = lugar.numLogradouro ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@preco", SqlDbType.Decimal).Value = lugar.preco;
 
 
                     conexaoBd.Open();
