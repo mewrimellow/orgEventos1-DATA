@@ -8,9 +8,9 @@ namespace orgEventos1_DATA
 {
     public class Servico
     {
-        public int IdServico { get; set; }
-        public decimal Preco { get; set; }        
-        public string Descricao { get; set; }
-        public string Tipo { get; set; }
+        public int id_servico { get; set; }
+        public decimal preco { get; set; }        
+        public string descricao { get; set; }
+        public string tipo { get; set; }
     }
 }
