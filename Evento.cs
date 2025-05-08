@@ -10,7 +10,7 @@ namespace orgEventos1_DATA
     {
         public int IdEvento { get; set; }
         public string Tipo { get; set; }
-        public float Preco { get; set; }
+        public decimal Preco { get; set; }
         public string Lotacao { get; set; }        
         public DateTime HoraComeco { get; set; }
         public DateTime HoraFin { get; set; }
