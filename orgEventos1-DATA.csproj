@@ -51,6 +51,8 @@
     <Compile Include="ServicoDoEvento.cs" />
     <Compile Include="Trabalhador-DAO.cs" />
     <Compile Include="Trabalhador.cs" />
+    <Compile Include="Usuarios-DAO.cs" />
+    <Compile Include="Usuarios.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
