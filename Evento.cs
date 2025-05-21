@@ -8,14 +8,14 @@ namespace orgEventos1_DATA
 {
     public class Evento
     {
-        public int IdEvento { get; set; }
-        public string Tipo { get; set; }
-        public float Preco { get; set; }
-        public string Lotacao { get; set; }        
-        public DateTime HoraComeco { get; set; }
-        public DateTime HoraFin { get; set; }
-        public DateTime DiaEvento { get; set; }
-        public int FkLugarIdLugar { get; set; }  // Relación con Lugar
-        public int FkClienteIdCliente { get; set; }  // Relación con Cliente
+        public int id_evento { get; set; }
+        public string tipo { get; set; }
+        public decimal preco { get; set; }
+        public string lotacao { get; set; }        
+        public DateTime hora_comeco { get; set; }
+        public DateTime hora_fin { get; set; }
+        public DateTime dia_evento { get; set; }
+        public int fk_lugar_id_lugar { get; set; }  // Relación con Lugar
+        public int fk_cliente_id_cliente { get; set; }  // Relación con Cliente
     }
 }

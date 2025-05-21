@@ -8,11 +8,11 @@ namespace orgEventos1_DATA
 {
     public class Pagamento
     {
-        public int IdPagamento { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime DiaPagamento { get; set; }        
-        public string StatusPagamento { get; set; }
-        public int FkEventoIdEvento { get; set; }
+        public int id_pagamento { get; set; }
+        public decimal valor { get; set; }
+        public DateTime dia_pagamento { get; set; }        
+        public string status_pagamento { get; set; }
+        public int fk_evento_id_vento { get; set; }
 
     }
 }
