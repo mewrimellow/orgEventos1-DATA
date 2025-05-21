@@ -8,13 +8,13 @@ namespace orgEventos1_DATA
 {
     public class Lugar
     {
-        public int IdLugar { get; set; }
-        public string Tipo { get; set; }
-        public string Nome { get; set; }
-        public string Cep { get; set; }
-        public string Capacidade { get; set; }        
-        public string Logradouro { get; set; }
-        public string NumLogradouro { get; set; }
-        public decimal Preco { get; set; }
+        public int id_lugar { get; set; }
+        public string tipo { get; set; }
+        public string nome { get; set; }
+        public string cep { get; set; }
+        public string capacidade { get; set; }        
+        public string logradouro { get; set; }
+        public string numLogradouro { get; set; }
+        public decimal preco { get; set; }
     }
 }

@@ -44,11 +44,14 @@
     <Compile Include="Cliente-DAO.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Evento.cs" />
+    <Compile Include="Evento_DAO.cs" />
     <Compile Include="Lugar.cs" />
+    <Compile Include="Lugar_DAO.cs" />
     <Compile Include="Pagamento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servico.cs" />
     <Compile Include="ServicoDoEvento.cs" />
+    <Compile Include="Servico_DAO.cs" />
     <Compile Include="Trabalhador-DAO.cs" />
     <Compile Include="Trabalhador.cs" />
     <Compile Include="Usuarios-DAO.cs" />

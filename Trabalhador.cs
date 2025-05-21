@@ -8,12 +8,12 @@ namespace orgEventos1_DATA
 {
     public class Trabalhador
     {
-        public int IdTrabalhador { get; set; }
-        public string Cpf { get; set; }
-        public string Email { get; set; }
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public int FkServicoIdServico { get; set; }
+        public int id_trabalhador { get; set; }
+        public string cpf { get; set; }
+        public string email { get; set; }
+        public string nome { get; set; }
+        public string telefone { get; set; }
+        public int fk_servico_id_servico { get; set; }
 
 
     }

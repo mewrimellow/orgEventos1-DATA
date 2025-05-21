@@ -8,7 +8,7 @@ namespace orgEventos1_DATA
 {
     public class ServicoDoEvento
     {
-        public int FkServicoIdServico { get; set; }  // Relación con Servico
-        public int FkEventoIdEvento { get; set; }  // Relación con Evento
+        public int fk_servico_id_servico { get; set; }  // Relación con Servico
+        public int fk_evento_id_evento { get; set; }  // Relación con Evento
     }
 }
