@@ -53,6 +53,68 @@ namespace orgEventos1_DATA
             {
                 throw new Exception($"Erro ao incluir Lugar: {ex.Message}", ex);
             }
-        }       
+        }
+
+
+        public DataSet BuscarLugar(string pesquisa = "")
+        {
+            const string query = "SELECT * FROM Lugar WHERE nome LIKE @pesquisa";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                using (var adaptador = new SqlDataAdapter(comando))
+
+                {
+                    string parametroPesquisa = $"%{pesquisa}%";
+
+                    comando.Parameters.Add("@pesquisa", SqlDbType.NVarChar).Value = parametroPesquisa;
+
+                    conexaoBd.Open();
+
+                    var dsLugar = new DataSet();
+
+                    adaptador.Fill(dsLugar, "Lugar");
+
+                    return dsLugar;
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar lugar: {ex.Message}", ex);
+            }
+
+        }
+
+
+        public void ExcluirLugar(int CodigoLugar) // OBS: Renomear para 'CodigoMedico' para manter a consistência
+        {
+            const string query = "DELETE FROM Lugar WHERE id_lugar = @CodigoLugar";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+                    comando.Parameters.Add("@CodigoLugar", SqlDbType.Int).Value = CodigoLugar;
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery(); // Executa a exclusão
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao excluir o lugar:{ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao excluir lugar: {ex.Message}", ex);
+            }
+        }
+
+
     }
 }

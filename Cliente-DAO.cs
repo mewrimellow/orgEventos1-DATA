@@ -93,14 +93,14 @@ namespace orgEventos1_DATA
 
         public void ExcluirCliente(int CodigoCliente) // OBS: Renomear para 'CodigoMedico' para manter a consistência
         {
-            const string query = "DELETE FROM Cliente WHERE id_cliente = @id_cliente";
+            const string query = "DELETE FROM Cliente WHERE id_cliente = @CodigoCliente";
 
             try
             {
                 using (var conexaoBd = new SqlConnection(_conexao))
                 using (var comando = new SqlCommand(query, conexaoBd))
                 {
-                    comando.Parameters.Add("@id_cliente", SqlDbType.Int).Value = CodigoCliente;
+                    comando.Parameters.Add("@CodigoCliente", SqlDbType.Int).Value = CodigoCliente;
 
                     conexaoBd.Open();
                     comando.ExecuteNonQuery(); // Executa a exclusão
@@ -108,11 +108,11 @@ namespace orgEventos1_DATA
             }
             catch (SqlException ex)
             {
-                throw new Exception($"Erro de banco de dados ao excluir o Medico:{ex.Message}", ex);
+                throw new Exception($"Erro de banco de dados ao excluir o cliente:{ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao excluir Medico : {ex.Message}", ex);
+                throw new Exception($"Erro ao excluir cliente : {ex.Message}", ex);
             }
         }
 

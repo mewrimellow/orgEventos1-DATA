@@ -21,7 +21,7 @@ namespace orgEventos1_DATA
         public void IncluirTrabalhador(Trabalhador trabalhador)
         {
 
-            const string query = @"INSERT INTO trabalhador(cpf, email, nome, telefone)
+            const string query = @"INSERT INTO Trabalhador(cpf, email, nome, telefone)
                                  VALUES (@cpf, @email, @nome, @telefone )";
 
 
@@ -53,5 +53,68 @@ namespace orgEventos1_DATA
 
 
         }
+
+
+
+
+        public DataSet BuscarTrabalhador(string pesquisa = "")
+        {
+            const string query = "SELECT * FROM Trabalhador WHERE nome LIKE @pesquisa";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                using (var adaptador = new SqlDataAdapter(comando))
+
+                {
+                    string parametroPesquisa = $"%{pesquisa}%";
+
+                    comando.Parameters.Add("@pesquisa", SqlDbType.NVarChar).Value = parametroPesquisa;
+
+                    conexaoBd.Open();
+
+                    var dsTrabalhador = new DataSet();
+
+                    adaptador.Fill(dsTrabalhador, "Trabalhador");
+
+                    return dsTrabalhador;
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar cliente: {ex.Message}", ex);
+            }
+
+        }
+
+
+        public void ExcluirTrabalhador(int CodigoTrabalhador) // OBS: Renomear para 'CodigoMedico' para manter a consistência
+        {
+            const string query = "DELETE FROM Trabalhador WHERE id_trabalhador = @CodigoTrabalhador";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+                    comando.Parameters.Add("@CodigoTrabalhador", SqlDbType.Int).Value = CodigoTrabalhador;
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery(); // Executa a exclusão
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao excluir o trabalhador:{ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao excluir trabalhador : {ex.Message}", ex);
+            }
+        }
+
     }
 }

@@ -52,5 +52,66 @@ namespace orgEventos1_DATA
             }
 
         }
+
+
+        public DataSet BuscarServico(string pesquisa = "")
+        {
+            const string query = "SELECT * FROM Servico WHERE nome LIKE @pesquisa";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                using (var adaptador = new SqlDataAdapter(comando))
+
+                {
+                    string parametroPesquisa = $"%{pesquisa}%";
+
+                    comando.Parameters.Add("@pesquisa", SqlDbType.NVarChar).Value = parametroPesquisa;
+
+                    conexaoBd.Open();
+
+                    var dsServico = new DataSet();
+
+                    adaptador.Fill(dsServico, "Servico");
+
+                    return dsServico;
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar serviço: {ex.Message}", ex);
+            }
+
+        }
+
+
+        public void ExcluirServico(int CodigoServico) // OBS: Renomear para 'CodigoMedico' para manter a consistência
+        {
+            const string query = "DELETE FROM Servico WHERE id_servico = @CodigoServico";
+
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+                    comando.Parameters.Add("@CodigoServico", SqlDbType.Int).Value = CodigoServico;
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery(); // Executa a exclusão
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao excluir o servico:{ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao excluir servico : {ex.Message}", ex);
+            }
+        }
+
     }
 }
