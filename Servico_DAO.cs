@@ -22,7 +22,7 @@ namespace orgEventos1_DATA
         public void InserirServico(Servico servico)
         {
 
-            const string query = @"INSERT INTO servico (preco, descricao, tipo, )
+            const string query = @"INSERT INTO servico (preco, descricao, tipo)
                                  VALUES (@preco, @descricao, @tipo )";
 
 
@@ -33,7 +33,7 @@ namespace orgEventos1_DATA
 
                 {
                     comando.Parameters.Add("@preco", SqlDbType.Decimal).Value = servico.preco;
-                    comando.Parameters.Add("@descricao", SqlDbType.NChar).Value = servico.descricao ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@descricao", SqlDbType.NVarChar).Value = servico.descricao ?? (object)DBNull.Value;
                     comando.Parameters.Add("@tipo", SqlDbType.NChar).Value = servico.tipo ?? (object)DBNull.Value;
 
 
@@ -112,6 +112,40 @@ namespace orgEventos1_DATA
                 throw new Exception($"Erro ao excluir servico : {ex.Message}", ex);
             }
         }
+
+
+        public List<Servico> ListarServicos()
+        {
+            List<Servico> lista = new List<Servico>();
+
+            using (SqlConnection conn = new SqlConnection(_conexao))
+            {
+                string sql = "SELECT id_servico, tipo, nome, preco FROM Servico";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Servico servico = new Servico
+                            {
+                                id_servico = reader.GetInt32(0),
+                                tipo = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                                descricao = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                                preco = reader.IsDBNull(3) ? 0m : reader.GetDecimal(3)
+                            };
+                            lista.Add(servico);
+                        }
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
 
     }
 }

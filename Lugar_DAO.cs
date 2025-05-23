@@ -22,7 +22,7 @@ namespace orgEventos1_DATA
         public void IncluirLugar ( Lugar lugar)
         {
 
-            const string query = @"INSERT INTO lugar(tipo, nome, cep, capacidade, logradouro, numLogradouro, preco )
+            const string query = @"INSERT INTO Lugar(tipo, nome, cep, capacidade, logradouro, numLogradouro, preco )
                                  VALUES (@tipo, @nome, @cep, @capacidade, @logradouro, @numLogradouro, @preco )";
 
 
@@ -36,7 +36,7 @@ namespace orgEventos1_DATA
                     comando.Parameters.Add("@nome", SqlDbType.NChar).Value = lugar.nome ?? (object)DBNull.Value;
                     comando.Parameters.Add("@cep", SqlDbType.NChar).Value = lugar.cep ?? (object)DBNull.Value;
                     comando.Parameters.Add("@capacidade", SqlDbType.NVarChar).Value = lugar.capacidade ?? (object)DBNull.Value;
-                    comando.Parameters.Add("@logradouro", SqlDbType.DateTime).Value = lugar.logradouro;
+                    comando.Parameters.Add("@logradouro", SqlDbType.NVarChar).Value = lugar.logradouro ?? (object)DBNull.Value;
                     comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = lugar.numLogradouro ?? (object)DBNull.Value;
                     comando.Parameters.Add("@preco", SqlDbType.Decimal).Value = lugar.preco;
 
