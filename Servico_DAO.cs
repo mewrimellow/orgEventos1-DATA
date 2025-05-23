@@ -56,7 +56,7 @@ namespace orgEventos1_DATA
 
         public DataSet BuscarServico(string pesquisa = "")
         {
-            const string query = "SELECT * FROM Servico WHERE nome LIKE @pesquisa";
+            const string query = "SELECT * FROM Servico WHERE tipo LIKE @pesquisa";
 
             try
             {
