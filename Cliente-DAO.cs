@@ -117,7 +117,48 @@ namespace orgEventos1_DATA
         }
 
 
+        public Cliente ObtemCliente(int CodigoCliente)
+        {
+            const string query = "SELECT * FROM Cliente WHERE id_cliente = @codigoCliente";
 
+            Cliente cliente = null;
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+                    comando.Parameters.AddWithValue("@codigoCliente", CodigoCliente); // Define o parâmetro
+
+                    conexaoBd.Open();
+
+                    using (var reader = comando.ExecuteReader())
+                    {
+                        if (reader.Read()) // Se encontrou o médico
+                        {
+                            // Cria o objeto com os dados lidos do banco
+                            cliente = new Cliente
+                            {
+                                id_cliente = Convert.ToInt32(reader["id_cliente"]),
+                                nome = reader["nome"].ToString(),
+                                cpf = reader.IsDBNull(reader.GetOrdinal("cpf")) ? null : reader["cpf"].ToString(),
+                                dataNasc = (DateTime)reader["dataNasc"],
+                                email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader["email"].ToString(),
+                                telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader["telefone"].ToString(),
+                                logradouro = reader.IsDBNull(reader.GetOrdinal("logradouro")) ? null : reader["logradouro"].ToString(),
+                                numLogradouro = reader.IsDBNull(reader.GetOrdinal("numLogradouro")) ? null : reader["numLogradouro"].ToString(),
+                                complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader["complemento"].ToString(),
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao obter o cliente: {ex.Message}", ex); // OBS: Aqui o termo correto seria "médico", não "cliente"
+            }
+
+            return cliente; // Retorna o objeto preenchido ou null se não encontrou
+        }
 
 
     }

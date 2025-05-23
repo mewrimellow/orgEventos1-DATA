@@ -120,7 +120,7 @@ namespace orgEventos1_DATA
 
             using (SqlConnection conn = new SqlConnection(_conexao))
             {
-                string sql = "SELECT id_servico, tipo, nome, preco FROM Servico";
+                string sql = "SELECT id_servico, tipo, descricao, preco FROM Servico";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
