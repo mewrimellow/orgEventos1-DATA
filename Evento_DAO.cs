@@ -66,11 +66,12 @@ namespace orgEventos1_DATA
 
                 cmd.Parameters.AddWithValue("@cliente", evento.id_cliente);
                 cmd.Parameters.AddWithValue("@lugar", evento.id_lugar);
-                cmd.Parameters.AddWithValue("@data", evento.dia_evento.Date);
+                cmd.Parameters.AddWithValue("@data", evento.dia_evento.Date); // Aquí sigue usando dia_evento en C#, pero insertando en data_evento
                 cmd.Parameters.AddWithValue("@inicio", evento.hora_inicio);
                 cmd.Parameters.AddWithValue("@fim", evento.hora_fim);
                 cmd.Parameters.AddWithValue("@preco", evento.preco);
 
+                Console.WriteLine("DATA A INSERIR: " + evento.dia_evento.ToString("yyyy-MM-dd"));
                 return Convert.ToInt32(cmd.ExecuteScalar()); // retorna o ID do evento inserido
             }
         }
@@ -83,43 +84,88 @@ namespace orgEventos1_DATA
                 foreach (var item in lista)
                 {
                     SqlCommand cmd = new SqlCommand(@"
-                INSERT INTO Evento_Servico (fk_evento_id_evento, fk_servico_id_servico)
-                VALUES (@idEvento, @idServico)", conn);
+                    INSERT INTO Evento_Servico (fk_evento_id_evento, fk_servico_id_servico)
+                    VALUES (@id_evento, @id_servico)", conn);
 
-                    cmd.Parameters.AddWithValue("@idEvento", idEvento);
-                    cmd.Parameters.AddWithValue("@idServico", item.fk_servico_id_servico);
-                    cmd.ExecuteNonQuery();
+                        cmd.Parameters.AddWithValue("@id_evento", idEvento);
+                        cmd.Parameters.AddWithValue("@id_servico", item.id_servico);
+                        cmd.ExecuteNonQuery();
                 }
             }
         }
 
-
-
-
-        public void ExcluirEvento(int CodigoEvento) // OBS: Renomear para 'CodigoMedico' para manter a consistência
+        public DataSet BuscarEvento(string pesquisa = "")
         {
-            const string query = "DELETE FROM evento WHERE id_evento = @CodigoEvento";
+            const string query = @"
+            SELECT e.id_evento, e.dia_evento, e.hora_inicio, e.hora_fim, e.preco,
+                   c.nome AS nome_cliente, l.nome AS nome_lugar
+            FROM Evento e
+            JOIN Cliente c ON e.id_cliente = c.id_cliente
+            JOIN Lugar l ON e.id_lugar = l.id_lugar
+            WHERE c.nome LIKE @pesquisa";
 
             try
             {
                 using (var conexaoBd = new SqlConnection(_conexao))
                 using (var comando = new SqlCommand(query, conexaoBd))
+                using (var adaptador = new SqlDataAdapter(comando))
                 {
-                    comando.Parameters.Add("@CodigoEvento", SqlDbType.Int).Value = CodigoEvento;
+                    string parametroPesquisa = $"%{pesquisa}%";
+                    comando.Parameters.Add("@pesquisa", SqlDbType.NVarChar).Value = parametroPesquisa;
 
                     conexaoBd.Open();
-                    comando.ExecuteNonQuery(); // Executa a exclusão
+
+                    var dsEvento = new DataSet();
+                    adaptador.Fill(dsEvento, "Evento");
+
+                    return dsEvento;
                 }
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception($"Erro de banco de dados ao excluir o evento:{ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao excluir evento : {ex.Message}", ex);
+                throw new Exception($"Erro ao buscar eventos: {ex.Message}", ex);
             }
         }
+
+
+
+        public void ExcluirEvento(int codigoEvento)
+        {
+            using (var conexao = new SqlConnection(_conexao))
+            {
+                conexao.Open();
+
+                using (var transaction = conexao.BeginTransaction())
+                {
+                    try
+                    {
+                        // Apagar registros filhos primeiro
+                        string sqlDeleteFilhos = "DELETE FROM Evento_Servico WHERE fk_evento_id_evento = @IdEvento";
+                        using (var cmdFilho = new SqlCommand(sqlDeleteFilhos, conexao, transaction))
+                        {
+                            cmdFilho.Parameters.AddWithValue("@IdEvento", codigoEvento);
+                            cmdFilho.ExecuteNonQuery();
+                        }
+
+                        // Depois apagar o evento
+                        string sqlDeleteEvento = "DELETE FROM Evento WHERE id_evento = @IdEvento";
+                        using (var cmdEvento = new SqlCommand(sqlDeleteEvento, conexao, transaction))
+                        {
+                            cmdEvento.Parameters.AddWithValue("@IdEvento", codigoEvento);
+                            cmdEvento.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Erro ao excluir evento: " + ex.Message, ex);
+                    }
+                }
+            }
+        }
+
 
 
         public List<EventoDetalhado> ListarEventosDetalhados()
@@ -129,7 +175,7 @@ namespace orgEventos1_DATA
                 e.id_evento,
                 c.nome AS nome_cliente,
                 l.nome AS nome_lugar,
-                e.data_evento,
+                e.dia_evento,
                 e.hora_inicio,
                 e.hora_fim
             FROM evento e
@@ -154,7 +200,7 @@ namespace orgEventos1_DATA
                                 IdEvento = Convert.ToInt32(reader["id_evento"]),
                                 nomeCliente = reader["nome_cliente"].ToString(),
                                 nomeLugar = reader["nome_lugar"].ToString(),
-                                DataEvento = Convert.ToDateTime(reader["data_evento"]),
+                                DataEvento = Convert.ToDateTime(reader["dia_evento"]),
                                 HoraInicio = reader["hora_inicio"] != DBNull.Value ? (TimeSpan)reader["hora_inicio"] : TimeSpan.Zero,
                                 HoraFim = reader["hora_fim"] != DBNull.Value ? (TimeSpan)reader["hora_fim"] : TimeSpan.Zero
                             };
