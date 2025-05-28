@@ -44,6 +44,7 @@
     <Compile Include="Cliente-DAO.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Evento.cs" />
+    <Compile Include="EventoDetalhado.cs" />
     <Compile Include="Evento_DAO.cs" />
     <Compile Include="Lugar.cs" />
     <Compile Include="Lugar_DAO.cs" />

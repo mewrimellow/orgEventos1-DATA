@@ -11,8 +11,9 @@ namespace orgEventos1_DATA
         public int id_evento { get; set; }
         public int id_cliente { get; set; }
         public int id_lugar { get; set; }
-        public DateTime DataEvento { get; set; }
+        public DateTime dia_evento { get; set; }
         public TimeSpan hora_inicio { get; set; }
         public TimeSpan hora_fim { get; set; }
+        public decimal preco { get; set; }
     }
 }

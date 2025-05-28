@@ -60,15 +60,16 @@ namespace orgEventos1_DATA
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"
-                INSERT INTO Evento (id_cliente, id_lugar, data_evento, hora_inicio, hora_fim)
-                VALUES (@cliente, @lugar, @data, @inicio, @fim);
+                INSERT INTO Evento (id_cliente, id_lugar, dia_evento, hora_inicio, hora_fim, preco)
+                VALUES (@cliente, @lugar, @data, @inicio, @fim, @preco);
                 SELECT SCOPE_IDENTITY();", conn);
 
                 cmd.Parameters.AddWithValue("@cliente", evento.id_cliente);
                 cmd.Parameters.AddWithValue("@lugar", evento.id_lugar);
-                cmd.Parameters.AddWithValue("@data", evento.DataEvento.Date);
+                cmd.Parameters.AddWithValue("@data", evento.dia_evento.Date);
                 cmd.Parameters.AddWithValue("@inicio", evento.hora_inicio);
                 cmd.Parameters.AddWithValue("@fim", evento.hora_fim);
+                cmd.Parameters.AddWithValue("@preco", evento.preco);
 
                 return Convert.ToInt32(cmd.ExecuteScalar()); // retorna o ID do evento inserido
             }
@@ -121,55 +122,55 @@ namespace orgEventos1_DATA
         }
 
 
-        //public List<EventoDetalhado> ListarEventosDetalhados()
-        //{
-        //        const string sql = @"
-        //    SELECT 
-        //        e.id_evento,
-        //        c.nome AS nome_cliente,
-        //        l.nome AS nome_lugar,
-        //        e.data_evento,
-        //        e.hora_inicio,
-        //        e.hora_fim
-        //    FROM evento e
-        //    JOIN cliente c ON c.id_cliente = e.id_cliente
-        //    JOIN lugar l ON l.id_lugar = e.id_lugar";
+        public List<EventoDetalhado> ListarEventosDetalhados()
+        {
+            const string sql = @"
+            SELECT 
+                e.id_evento,
+                c.nome AS nome_cliente,
+                l.nome AS nome_lugar,
+                e.data_evento,
+                e.hora_inicio,
+                e.hora_fim
+            FROM evento e
+            JOIN cliente c ON c.id_cliente = e.id_cliente
+            JOIN lugar l ON l.id_lugar = e.id_lugar";
 
-        //    var lista = new List<EventoDetalhado>();
+            var lista = new List<EventoDetalhado>();
 
-        //    try
-        //    {
-        //        using (var conexaoBd = new SqlConnection(_conexao))
-        //        using (var comando = new SqlCommand(sql, conexaoBd))
-        //        {
-        //            conexaoBd.Open();
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(sql, conexaoBd))
+                {
+                    conexaoBd.Open();
 
-        //            using (var reader = comando.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    var evento = new EventoDetalhado
-        //                    {
-        //                        IdEvento = Convert.ToInt32(reader["id_evento"]),
-        //                        NomeCliente = reader["nome_cliente"].ToString(),
-        //                        NomeLugar = reader["nome_lugar"].ToString(),
-        //                        DataEvento = Convert.ToDateTime(reader["data_evento"]),
-        //                        HoraInicio = reader["hora_inicio"] != DBNull.Value ? (TimeSpan)reader["hora_inicio"] : TimeSpan.Zero,
-        //                        HoraFim = reader["hora_fim"] != DBNull.Value ? (TimeSpan)reader["hora_fim"] : TimeSpan.Zero
-        //                    };
+                    using (var reader = comando.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var evento = new EventoDetalhado
+                            {
+                                IdEvento = Convert.ToInt32(reader["id_evento"]),
+                                nomeCliente = reader["nome_cliente"].ToString(),
+                                nomeLugar = reader["nome_lugar"].ToString(),
+                                DataEvento = Convert.ToDateTime(reader["data_evento"]),
+                                HoraInicio = reader["hora_inicio"] != DBNull.Value ? (TimeSpan)reader["hora_inicio"] : TimeSpan.Zero,
+                                HoraFim = reader["hora_fim"] != DBNull.Value ? (TimeSpan)reader["hora_fim"] : TimeSpan.Zero
+                            };
 
-        //                    lista.Add(evento);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception($"Erro ao listar eventos detalhados: {ex.Message}", ex);
-        //    }
+                            lista.Add(evento);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar eventos detalhados: {ex.Message}", ex);
+            }
 
-        //    return lista;
-        //}
+            return lista;
+        }
 
 
 
