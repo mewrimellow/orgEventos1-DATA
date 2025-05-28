@@ -9,13 +9,10 @@ namespace orgEventos1_DATA
     public class Evento
     {
         public int id_evento { get; set; }
-        public string tipo { get; set; }
-        public decimal preco { get; set; }
-        public string lotacao { get; set; }        
-        public DateTime hora_comeco { get; set; }
-        public DateTime hora_fin { get; set; }
-        public DateTime dia_evento { get; set; }
-        public int fk_lugar_id_lugar { get; set; }  // Relación con Lugar
-        public int fk_cliente_id_cliente { get; set; }  // Relación con Cliente
+        public int id_cliente { get; set; }
+        public int id_lugar { get; set; }
+        public DateTime DataEvento { get; set; }
+        public TimeSpan hora_inicio { get; set; }
+        public TimeSpan hora_fim { get; set; }
     }
 }
