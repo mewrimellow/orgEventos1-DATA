@@ -36,8 +36,8 @@ namespace orgEventos1_DATA
                     comando.Parameters.Add("@telefone", SqlDbType.NChar).Value = cliente.telefone ?? (object)DBNull.Value;
                     comando.Parameters.Add("@email", SqlDbType.NVarChar).Value = cliente.email ?? (object)DBNull.Value;
                     comando.Parameters.Add("@dataNasc", SqlDbType.DateTime).Value = cliente.dataNasc;
-                    comando.Parameters.Add("@logradouro", SqlDbType.NVarChar).Value = cliente.logradouro ?? (object)DBNull.Value;                    
-                    comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = cliente.numLogradouro ?? (object)DBNull.Value;                    
+                    comando.Parameters.Add("@logradouro", SqlDbType.NVarChar).Value = cliente.logradouro ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = cliente.numLogradouro ?? (object)DBNull.Value;
                     comando.Parameters.Add("@complemento", SqlDbType.NChar).Value = cliente.complemento ?? (object)DBNull.Value;
 
 
@@ -161,5 +161,62 @@ namespace orgEventos1_DATA
         }
 
 
+        public void AlterarCliente(Cliente cliente)
+        {
+
+            const string query = @"
+                    UPDATE  Cliente
+                    SET
+
+                        nome = @nome,
+                        cpf = @cpf,
+                        telefone = @telefone,
+                        email = @email,
+                        dataNasc = @dataNasc,
+                        logradouro = @logradouro,
+                        numLogradouro = @numLogradouro,
+                        complemento = @complemento
+
+                         WHERE id_cliente = @id_cliente
+                                
+                        ";
+
+
+            try
+            {
+
+
+                // Cria e abre a conexão com o banco
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+                    comando.Parameters.Add("@nome", SqlDbType.NVarChar).Value = cliente.nome ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@cpf", SqlDbType.NVarChar).Value = cliente.cpf ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@telefone", SqlDbType.NVarChar).Value = cliente.telefone ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@email", SqlDbType.NVarChar).Value = cliente.email ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@dataNasc", SqlDbType.DateTime).Value = cliente.dataNasc;
+                    comando.Parameters.Add("@logradouro", SqlDbType.NVarChar).Value = cliente.logradouro ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = cliente.numLogradouro ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@complemento", SqlDbType.NVarChar).Value = cliente.complemento ?? (object)DBNull.Value;
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery(); // Executa a atualização
+
+
+
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao alterar o paciente : {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao alterar o Paciente: {ex.Message}", ex);
+            }
+
+        }
     }
-}
+}   
+
