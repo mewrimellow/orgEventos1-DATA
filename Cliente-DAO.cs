@@ -198,6 +198,8 @@ namespace orgEventos1_DATA
                     comando.Parameters.Add("@logradouro", SqlDbType.NVarChar).Value = cliente.logradouro ?? (object)DBNull.Value;
                     comando.Parameters.Add("@numLogradouro", SqlDbType.NVarChar).Value = cliente.numLogradouro ?? (object)DBNull.Value;
                     comando.Parameters.Add("@complemento", SqlDbType.NVarChar).Value = cliente.complemento ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@id_cliente", SqlDbType.NVarChar).Value = cliente.id_cliente;
+
 
                     conexaoBd.Open();
                     comando.ExecuteNonQuery(); // Executa a atualização
