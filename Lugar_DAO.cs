@@ -145,7 +145,7 @@ namespace orgEventos1_DATA
                                 logradouro = reader.IsDBNull(reader.GetOrdinal("logradouro")) ? null : reader["logradouro"].ToString(),
                                 numLogradouro = reader.IsDBNull(reader.GetOrdinal("numLogradouro")) ? null : reader["numLogradouro"].ToString(),
                                 //preco = reader.IsDBNull(reader.GetOrdinal("preco")) ? null : reader["preco"].ToString(),
-                                
+                                preco = Convert.ToDecimal(reader["preco"])
 
                             };
                         }

@@ -120,7 +120,7 @@ namespace orgEventos1_DATA
         public Trabalhador ObtemTrabalhador(int codigoTrabalhador)
         {
 
-            const string query = "SELECT * FROM Trabalhador WHERE id_trabalhador = @id_trabalhador";
+            const string query = "SELECT * FROM Trabalhador WHERE id_trabalhador = @codigoTrabalhador";
 
             Trabalhador trabalhador = null;
             try
@@ -129,7 +129,7 @@ namespace orgEventos1_DATA
                 using (var comando = new SqlCommand(query, conexaoBd))
                 {
 
-                    comando.Parameters.AddWithValue("@id_trabalhador", codigoTrabalhador);
+                    comando.Parameters.AddWithValue("@codigoTrabalhador", codigoTrabalhador);
 
                     conexaoBd.Open();
 
