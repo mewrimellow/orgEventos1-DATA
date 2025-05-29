@@ -146,6 +146,102 @@ namespace orgEventos1_DATA
         }
 
 
+        public Servico ObtemServico(int CodigoServico)
+        {
+
+            const string query = "SELECT * FROM Servico WHERE id_servico = @id_servico";
+
+            Servico servico = null;
+
+            try
+            {
+
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+
+                    comando.Parameters.AddWithValue("@id_servico", CodigoServico);
+
+                    conexaoBd.Open();
+
+                    using (var reader = comando.ExecuteReader())
+                    {
+
+                        if (reader.Read())
+                        {
+
+                            servico = new Servico()
+                            {
+                                id_servico = Convert.ToInt32(reader["id_servico"]),
+                                //preco = reader.IsDBNull(reader.GetOrdinal("preco")) ? null : reader["preco"].ToString(),
+                                descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader["descricao"].ToString(),
+                                tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? null : reader["tipo"].ToString(),
+
+
+
+                            };
+                        }
+
+
+                    }
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao obter o cliente: {ex.Message}", ex); // OBS: Aqui o termo correto seria "médico", não "cliente"
+            }
+
+            return servico;
+
+        }
+
+
+        public void AlterarServico(Servico servico)
+        {
+
+            const string query = @"
+                    UPDATE  Servico
+                    SET
+
+                        preco = @preco,
+                        descricao = @descricao,
+                        tipo = @tipo
+
+                        WHERE id_servico = @id_servico
+
+                    ";
+
+
+            try
+            {
+
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+
+                    comando.Parameters.Add("@preco", SqlDbType.NVarChar).Value = servico.preco;
+                    comando.Parameters.Add("@descricao", SqlDbType.NVarChar).Value = servico.descricao ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@tipo", SqlDbType.NVarChar).Value = servico.tipo ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@id_servico", SqlDbType.NVarChar).Value = servico.id_servico;
+
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery();
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao alterar o paciente : {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao alterar o Paciente: {ex.Message}", ex);
+            }
+        }
 
     }
 }

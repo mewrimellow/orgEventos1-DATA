@@ -116,5 +116,99 @@ namespace orgEventos1_DATA
             }
         }
 
+
+        public Trabalhador ObtemTrabalhador(int codigoTrabalhador)
+        {
+
+            const string query = "SELECT * FROM Trabalhador WHERE id_trabalhador = @id_trabalhador";
+
+            Trabalhador trabalhador = null;
+            try
+            {
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+
+                    comando.Parameters.AddWithValue("@id_trabalhador", codigoTrabalhador);
+
+                    conexaoBd.Open();
+
+                    using (var reader = comando.ExecuteReader())
+                    {
+
+                        if (reader.Read())
+                        {
+                            trabalhador = new Trabalhador()
+                            {
+                                id_trabalhador = Convert.ToInt32(reader["id_trabalhador"]),
+                                cpf = reader.IsDBNull(reader.GetOrdinal("cpf")) ? null : reader["cpf"].ToString(),
+                                email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader["email"].ToString(),
+                                nome = reader.IsDBNull(reader.GetOrdinal("nome")) ? null : reader["nome"].ToString(),
+                                telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader["telefone"].ToString(),
+
+
+                            };
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao obter o trabalhador: {ex.Message}", ex); 
+            }
+
+            return trabalhador;
+
+        }
+
+
+        public void AlterarTrabalhador(Trabalhador trabalhador)
+        {
+
+            const string query = @"
+
+                 UPDATE Trabalhador 
+                 SET
+    
+                   cpf = @cpf,
+                   email = @email,
+                   nome = @nome,
+                   telefone = @telefone
+
+    
+                   WHERE id_trabalhador = @id_trabalhador ";
+
+
+            try
+            {
+
+                using (var conexaoBd = new SqlConnection(_conexao))
+                using (var comando = new SqlCommand(query, conexaoBd))
+                {
+
+                    comando.Parameters.Add("@cpf", SqlDbType.NVarChar).Value = trabalhador.cpf ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@email", SqlDbType.NVarChar).Value = trabalhador.email ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@nome", SqlDbType.NVarChar).Value = trabalhador.nome ?? (object)DBNull.Value;
+                    comando.Parameters.Add("@telefone", SqlDbType.NVarChar).Value = trabalhador.telefone ?? (object)DBNull.Value;
+
+                    comando.Parameters.Add("@id_trabalhador", SqlDbType.NVarChar).Value = trabalhador.id_trabalhador;
+
+                    conexaoBd.Open();
+                    comando.ExecuteNonQuery();
+
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Erro de banco de dados ao alterar o paciente : {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao alterar o Paciente: {ex.Message}", ex);
+            }
+        }
+
     }
 }
